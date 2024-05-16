@@ -1,8 +1,7 @@
-
 import express, { Application, Request, Response } from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import studentRoutes from './routes/student.routes';
-const cors = require('cors');
 
 const app: Application = express();
 
@@ -19,10 +18,7 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello, World!');
 });
 
-
-
 const PORT = process.env.PORT || 7000;
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
