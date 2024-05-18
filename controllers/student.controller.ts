@@ -5,19 +5,16 @@ import { FilterQuery } from 'mongoose';
 export const getStudents = async (req: Request, res: Response) => {
   console.log("getStudents called with query:", req.query);
   try {
-    const { email, name, phone } = req.query;
+    const { search } = req.query;
     const query: FilterQuery<IStudent> = {};
 
-    if (email) {
-      query.email = { $regex: email as string, $options: 'i' }; 
-    }
-
-    if (name) {
-      query.name = { $regex: name as string, $options: 'i' }; 
-    }
-
-    if (phone) {
-      query.phone = { $regex: phone as string, $options: 'i' }; 
+    if (search) {
+      const searchRegex = { $regex: search as string, $options: 'i' };
+      query.$or = [
+        { name: searchRegex },
+        { email: searchRegex },
+        { enrollNumber: searchRegex },
+      ];
     }
 
     console.log("Query constructed:", query);
@@ -34,6 +31,7 @@ export const getStudents = async (req: Request, res: Response) => {
     }
   }
 };
+
 
 export const createStudent = async (req: Request, res: Response) => {
   const { name, email, phone, enrollNumber, dateOfAdmission } = req.body;
