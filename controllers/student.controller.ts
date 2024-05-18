@@ -13,7 +13,8 @@ export const getStudents = async (req: Request, res: Response) => {
       query.$or = [
         { name: searchRegex },
         { email: searchRegex },
-        { enrollNumber: searchRegex },
+        { phone: searchRegex },
+        { enrollNumber: searchRegex }
       ];
     }
 
@@ -31,7 +32,6 @@ export const getStudents = async (req: Request, res: Response) => {
     }
   }
 };
-
 
 export const createStudent = async (req: Request, res: Response) => {
   const { name, email, phone, enrollNumber, dateOfAdmission } = req.body;
