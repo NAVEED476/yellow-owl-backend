@@ -1,11 +1,32 @@
 import { Request, Response } from 'express';
 import Student, { IStudent } from '../models/student.model';
+import { FilterQuery } from 'mongoose';
 
 export const getStudents = async (req: Request, res: Response) => {
+  console.log("getStudents called with query:", req.query);
   try {
-    const students = await Student.find();
+    const { email, name, phone } = req.query;
+    const query: FilterQuery<IStudent> = {};
+
+    if (email) {
+      query.email = { $regex: email as string, $options: 'i' }; 
+    }
+
+    if (name) {
+      query.name = { $regex: name as string, $options: 'i' }; 
+    }
+
+    if (phone) {
+      query.phone = { $regex: phone as string, $options: 'i' }; 
+    }
+
+    console.log("Query constructed:", query);
+
+    const students = await Student.find(query);
+    console.log("Students found:", students);
     res.status(200).json(students);
   } catch (error: unknown) {
+    console.error("Error fetching students:", error);
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });
     } else {
