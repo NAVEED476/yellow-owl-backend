@@ -2,10 +2,14 @@ Yellow Owl
 Student management System
 
 API Reference
-Get all items
+
+##Get all items
   GET http://localhost:7000/api/students
+
+  
 Response
-`{
+ :------------------------- 
+{
     "_id": "6646ed6bce3d235fc1374166",
     "name": "newStudent",
     "email": "snaveedn2322@gmail.com",
@@ -13,8 +17,10 @@ Response
     "enrollNumber": "983243483",
     "dateOfAdmission": "2024-05-28T00:00:00.000Z",
     "__v": 0
-}`
-create Student
+}
+
+
+## create Student
   POST http://localhost:7000/api/students/create
 
    
